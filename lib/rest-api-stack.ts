@@ -106,7 +106,21 @@ export class RestAPIStack extends cdk.Stack {
       new apig.LambdaIntegration(getMovieByIdFn, { proxy: true })
     );
         
+
+    const newMovieFn = new lambdanode.NodejsFunction(this, "AddMovieFn", {
+      architecture: lambda.Architecture.ARM_64,
+      runtime: lambda.Runtime.NODEJS_16_X,
+      entry: `${__dirname}/../lambdas/addMovie.ts`,
+      timeout: cdk.Duration.seconds(10),
+      memorySize: 128,
+      environment: {
+        TABLE_NAME: moviesTable.tableName,
+        REGION: cdk.Aws.REGION,
+      },
+    });
         
+    moviesTable.grantReadWriteData(newMovieFn)
+
 
 
 
