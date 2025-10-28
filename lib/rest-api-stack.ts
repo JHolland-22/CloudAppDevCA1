@@ -105,6 +105,11 @@ export class RestAPIStack extends cdk.Stack {
       "GET",
       new apig.LambdaIntegration(getMovieByIdFn, { proxy: true })
     );
+
+        movieEndpoint.addMethod(
+      "POST",
+      new apig.LambdaIntegration(getMovieByIdFn, { proxy: true })
+    );
         
 
     const newMovieFn = new lambdanode.NodejsFunction(this, "AddMovieFn", {
