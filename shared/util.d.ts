@@ -1,11 +1,13 @@
-import { Movie } from "./types";
-export declare const generateMovieItem: (movie: Movie) => {
+import { Movie, MovieCast } from "./types";
+type Entity = Movie | MovieCast;
+export declare const generateItem: (entity: Entity) => {
     PutRequest: {
         Item: Record<string, import("@aws-sdk/client-dynamodb").AttributeValue>;
     };
 };
-export declare const generateBatch: (data: Movie[]) => {
+export declare const generateBatch: (data: Entity[]) => {
     PutRequest: {
         Item: Record<string, import("@aws-sdk/client-dynamodb").AttributeValue>;
     };
 }[];
+export {};
