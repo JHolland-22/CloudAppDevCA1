@@ -16,8 +16,6 @@ export class CognitoStack extends cdk.Stack {
     super(scope, id, props);
 
 
-
-
     const userPool = new UserPool(this, "UserPool", {
       signInAliases: { username: true, email: true },
       selfSignUpEnabled: true,
@@ -43,6 +41,13 @@ export class CognitoStack extends cdk.Stack {
 
     
     this.auth = authApi.root.addResource("auth");
+
+        this.addAuthRoute(
+      "signup",
+      "POST",
+      "SignupFn",
+      'signup.ts'
+    );
   }
 
 
@@ -69,7 +74,7 @@ export class CognitoStack extends cdk.Stack {
     
     const fn = new node.NodejsFunction(this, fnName, {
       ...commonFnProps,
-      entry: `${__dirname}/../lambda/auth/${fnEntry}`,
+      entry: `${__dirname}/../lambdas/auth/${fnEntry}`,
     });
 
     resource.addMethod(method, new apig.LambdaIntegration(fn));

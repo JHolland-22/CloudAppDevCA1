@@ -30,5 +30,9 @@ export type Movie =   {
     roleName?: string
  }
 
-
+   export type SignUpBody = {
+  username: string;
+  password: string;
+  email: string;
+};
  
