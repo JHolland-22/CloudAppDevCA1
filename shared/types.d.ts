@@ -35,4 +35,19 @@ export type Movie =   {
   password: string;
   email: string;
 };
+
+   export type ConfirmSignUpBody = {
+  username: string;
+  code: string;
+};
+
+
+   export type SignInBody = {
+  username: string;
+  password: string;
+};
+
+   export type SignOutBody = {
+//empty becasue you dont need anything for signing out 
+};
  

@@ -48,6 +48,17 @@ export class CognitoStack extends cdk.Stack {
       "SignupFn",
       'signup.ts'
     );
+    
+
+    this.addAuthRoute(
+      "confirm_signup",
+      "POST",
+      "ConfirmFn",
+      "confirm-signup.ts"
+    );
+
+    this.addAuthRoute('signout', 'GET', 'SignoutFn', 'signout.ts');
+    this.addAuthRoute('signin', 'POST', 'SigninFn', 'signin.ts');
   }
 
 
@@ -57,7 +68,9 @@ export class CognitoStack extends cdk.Stack {
     fnName: string,
     fnEntry: string,
     allowCognitoAccess?: boolean
-  ): void {
+  ):
+  
+  void {
     const commonFnProps = {
       architecture: lambda.Architecture.ARM_64,
       timeout: cdk.Duration.seconds(10),
