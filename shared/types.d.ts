@@ -19,6 +19,7 @@ export type Movie =   {
 
   export type MovieCast = {
     movieId: number;
+    actorId: number;
     actorName: string;
     roleName: string;
     roleDescription: string;

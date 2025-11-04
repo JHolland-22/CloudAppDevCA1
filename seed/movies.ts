@@ -344,13 +344,14 @@ export const movieCasts: MovieCast[] = [
  },
  {
     movieId: 848326,
+    actorId:3,
     actorName: "Joe Cloggs",
     roleName: "Male Character 2",
     roleDescription: "description of character 3",
  },
  {
     movieId: 572802,
-    actorId:3,
+    actorId:4,
     actorName: "Joe Bloggs",
     roleName: "Male Character 1",
     roleDescription: "description of character 3",
