@@ -159,6 +159,7 @@ export class RestAPIStack extends cdk.Stack {
         moviesTable.grantReadData(getAllMoviesFn)
         moviesTable.grantReadWriteData(newMovieFn)
         moviesTable.grantReadWriteData(deleteMovieFn)
+        moviesTable.grantReadData(getActorByIdFn);
         movieCastsTable.grantReadData(getMovieCastMembersFn);
         movieCastsTable.grantReadData(getMovieByIdFn);
         movieCastsTable.grantReadData(getActorByIdFn);
@@ -195,7 +196,6 @@ moviesEndpoint.addMethod(
 );
 
 const movieEndpoint = moviesEndpoint.addResource("{movieId}");
-
 movieEndpoint.addMethod(
   "GET",
   new apig.LambdaIntegration(getMovieByIdFn, { proxy: true })
@@ -207,20 +207,18 @@ movieEndpoint.addMethod(
   new apig.LambdaIntegration(deleteMovieFn, { proxy: true })
 );
        
-const movieCastEndpoint = moviesEndpoint.addResource("cast");
+const movieCastEndpoint = movieEndpoint.addResource("cast");
 movieCastEndpoint.addMethod(
     "GET",
     new apig.LambdaIntegration(getMovieCastMembersFn, { proxy: true })
 );
 
 
-const actorIdEndpoint = moviesEndpoint.addResource("{actorid}");
+const actorIdEndpoint = movieCastEndpoint.addResource("{actorId}");
 actorIdEndpoint.addMethod(
     "GET",
     new apig.LambdaIntegration(getActorByIdFn, { proxy: true })
 );
-
-
  }
 }
     

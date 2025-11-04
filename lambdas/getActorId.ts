@@ -8,30 +8,36 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   try {
     console.log("[EVENT]", JSON.stringify(event));
 
-    const parameters  = event?.pathParameters;
+    const parameters = event.pathParameters;
+    const movieId = parameters?.movieId ? parseInt(parameters.movieId) : undefined;
     const actorId = parameters?.actorId ? parseInt(parameters.actorId) : undefined;
 
-    if (!actorId) {
+    if (!movieId || !actorId) {
       return {
         statusCode: 404,
         headers: {
           "content-type": "application/json",
         },
-        body: JSON.stringify({ Message: "Missing actor Id" }),
+        body: JSON.stringify({ Message: "Missing movie id and actor Id" }),
       };
     }
 
 
     const commandOutput = await ddbDocClient.send(
-      new GetCommand({
-        TableName: process.env.TABLE_NAME,
-        Key: { id: actorId },
+      new QueryCommand({
+      TableName: process.env.CAST_TABLE_NAME,
+      KeyConditionExpression: "movieId = :movieId",
+      FilterExpression: "actorId = :actorId",
+      ExpressionAttributeValues: {
+        ":movieId": movieId,
+        ":actorId": actorId
+          } 
       })
     );
 
 
     console.log("GetCommand response: ", commandOutput);
-    if (!commandOutput.Item) {
+    if (!commandOutput.Items) {
       return {
         statusCode: 404,
         headers: {
@@ -41,7 +47,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       };
     }
     const body = {
-      data: commandOutput.Item,
+      data: commandOutput.Items,
     };
 
 
