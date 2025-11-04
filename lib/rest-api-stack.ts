@@ -214,8 +214,8 @@ movieCastEndpoint.addMethod(
 );
 
 
-movieCastEndpoint = moviesEndpoint.addResource("{actorid}");
-movieCastEndpoint.addMethod(
+const actorIdEndpoint = moviesEndpoint.addResource("{actorid}");
+actorIdEndpoint.addMethod(
     "GET",
     new apig.LambdaIntegration(getActorByIdFn, { proxy: true })
 );
