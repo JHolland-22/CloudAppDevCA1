@@ -330,12 +330,14 @@ export const movies : Movie[] = [
 export const movieCasts: MovieCast[] = [
  {
     movieId: 848326,
+    actorId:1,
     actorName: "Joe Bloggs",
     roleName: "Male Character 1",
     roleDescription: "description of character 1",
  },
  {
     movieId: 848326,
+    actorId:2,
     actorName: "Alice Broggs",
     roleName: "Female Character 1",
     roleDescription: "description of character 2",
@@ -348,6 +350,7 @@ export const movieCasts: MovieCast[] = [
  },
  {
     movieId: 572802,
+    actorId:3,
     actorName: "Joe Bloggs",
     roleName: "Male Character 1",
     roleDescription: "description of character 3",
