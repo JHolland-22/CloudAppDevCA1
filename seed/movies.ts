@@ -336,7 +336,7 @@ export const movieCasts: MovieCast[] = [
     roleDescription: "description of character 1",
  },
  {
-    movieId: 848326,
+    movieId: 572802,
     actorId:2,
     actorName: "Alice Broggs",
     roleName: "Female Character 1",
@@ -357,3 +357,34 @@ export const movieCasts: MovieCast[] = [
     roleDescription: "description of character 3",
  },
 ];
+
+
+export const award: award[] = [
+ {
+    awardId: 848326,
+    body: "Academy",
+    category: "Best movie ",
+    year:2024 ,
+ },
+ {
+    awardId: 572802,
+    body: "Bafta",
+    category: "Best Action movie ",
+    year:2024 ,
+ },
+ {
+    awardId: 1,
+    body: "Golden Globe ",
+    category: "Best male actor ",
+    year:2024 ,
+ },
+ {
+    awardId: 2,
+    body: "Academy",
+    category: "Best female actor ",
+    year:2024 ,
+ },
+];
+
+
+
