@@ -32,7 +32,7 @@ export type Movie =   {
  }
 
 
- export type award = {
+ export type Award = {
   awardId: number;
   body: string;
   category: string;

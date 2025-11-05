@@ -8,11 +8,10 @@ const ddbDocClient = createDDbDocClient();
 export const handler: APIGatewayProxyHandler = async (event, context) => {     
   try {
     console.log("[EVENT]", JSON.stringify(event));
-
     const parameters = event.pathParameters;
     const movieId = parameters?.movieId ? parseInt(parameters.movieId) : undefined;
     const actorId = parameters?.actorId ? parseInt(parameters.actorId) : undefined;
-    const award = QueryParams.award 
+    const award = parameters?.awardId ? parseInt(parameters.awardId) : undefined;
 
 
     if (!movieId || !actorId||!award) {

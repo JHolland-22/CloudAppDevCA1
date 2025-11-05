@@ -1,4 +1,4 @@
-import {Movie, MovieCast,award} from '../shared/types'
+import {Movie, MovieCast,Award} from '../shared/types'
 
 
 export const movies : Movie[] = [
@@ -359,7 +359,7 @@ export const movieCasts: MovieCast[] = [
 ];
 
 
-export const award: award[] = [
+export const awards : Award[] = [
  {
     awardId: 848326,
     body: "Academy",
