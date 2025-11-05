@@ -153,6 +153,23 @@ export class RestAPIStack extends cdk.Stack {
       }
       );
 
+  const getAwardsFn = new lambdanode.NodejsFunction(
+      this,
+      "getAwardsFn",
+      {
+        architecture: lambda.Architecture.ARM_64,
+        runtime: lambda.Runtime.NODEJS_18_X,
+        entry: `${__dirname}/../lambdas/getAwards.ts`,
+        timeout: cdk.Duration.seconds(10),
+        memorySize: 128,
+        environment: {
+          TABLE_NAME: moviesTable.tableName,
+          CAST_TABLE_NAME : movieCastsTable.tableName,
+          REGION: cdk.Aws.REGION,
+        },
+      }
+      );
+
         
         // Permissions 
         moviesTable.grantReadData(getMovieByIdFn)
@@ -163,6 +180,8 @@ export class RestAPIStack extends cdk.Stack {
         movieCastsTable.grantReadData(getMovieCastMembersFn);
         movieCastsTable.grantReadData(getMovieByIdFn);
         movieCastsTable.grantReadData(getActorByIdFn);
+        moviesTable.grantReadData(getAwardsFn);
+        movieCastsTable.grantReadData(getAwardsFn);
 
 
 
@@ -219,6 +238,14 @@ actorIdEndpoint.addMethod(
     "GET",
     new apig.LambdaIntegration(getActorByIdFn, { proxy: true })
 );
+
+const awardsEndpoint = api.root.addResource("{awardId}");
+awardsEndpoint.addMethod(
+    "GET",
+    new apig.LambdaIntegration(getAwardsFn, { proxy: true })
+);
+
+
  }
 }
     
