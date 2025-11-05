@@ -31,6 +31,14 @@ export type Movie =   {
     roleName?: string
  }
 
+
+ export type award = {
+  awardId: string;
+  body: string;
+  category: string;
+  year: number;
+ }
+
    export type SignUpBody = {
   username: string;
   password: string;

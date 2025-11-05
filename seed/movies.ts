@@ -1,4 +1,4 @@
-import {Movie, MovieCast} from '../shared/types'
+import {Movie, MovieCast,award} from '../shared/types'
 
 
 export const movies : Movie[] = [
