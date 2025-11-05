@@ -239,7 +239,8 @@ actorIdEndpoint.addMethod(
     new apig.LambdaIntegration(getActorByIdFn, { proxy: true })
 );
 
-const awardsEndpoint = api.root.addResource("{awardId}");
+
+const awardsEndpoint = api.root.addResource("awards");
 awardsEndpoint.addMethod(
     "GET",
     new apig.LambdaIntegration(getAwardsFn, { proxy: true })

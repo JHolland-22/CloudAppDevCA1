@@ -8,13 +8,12 @@ const ddbDocClient = createDDbDocClient();
 export const handler: APIGatewayProxyHandler = async (event, context) => {     
   try {
     console.log("[EVENT]", JSON.stringify(event));
-    const parameters = event.pathParameters;
-    const movieId = parameters?.movieId ? parseInt(parameters.movieId) : undefined;
-    const actorId = parameters?.actorId ? parseInt(parameters.actorId) : undefined;
-    const award = parameters?.awardId ? parseInt(parameters.awardId) : undefined;
+    const queryParams = event.queryStringParameters;
+    const movieId = queryParams?.movie ? parseInt(queryParams.movie) : undefined;
+    const actorId = queryParams?.actor ? parseInt(queryParams.actor) : undefined;
+    const awardBody = queryParams?.awardBody;
 
-
-    if (!movieId || !actorId||!award) {
+    if (!movieId || !actorId||!awardBody) {
       return {
         statusCode: 404,
         headers: {
@@ -27,13 +26,13 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
     const commandOutput = await ddbDocClient.send(
       new QueryCommand({
-      TableName: process.env.CAST_TABLE_NAME,
+      TableName: process.env.AWARDS_TABLE,
       KeyConditionExpression: "movieId = :movieId",
       FilterExpression: "actorId = :actorId AND award =:award",
       ExpressionAttributeValues: {
         ":movieId": movieId,
         ":actorId": actorId,
-        ":award": award
+        ":award": awardBody
           } 
       })
     );
