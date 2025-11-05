@@ -39,7 +39,7 @@ export class RestAPIStack extends cdk.Stack {
 
      const awardsTable = new dynamodb.Table(this, "AwardsTable", {
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
-      partitionKey: { name: "id", type: dynamodb.AttributeType.NUMBER },
+      partitionKey: { name: "awardId", type: dynamodb.AttributeType.NUMBER },
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       tableName: "Awards",
     });
@@ -94,7 +94,7 @@ export class RestAPIStack extends cdk.Stack {
         physicalResourceId: custom.PhysicalResourceId.of("moviesddbInitData"), //.of(Date.now().toString()),
  },
       policy: custom.AwsCustomResourcePolicy.fromSdkCalls({
-        resources: [moviesTable.tableArn, movieCastsTable.tableArn],  // Includes movie cast
+        resources: [moviesTable.tableArn, movieCastsTable.tableArn, awardsTable.tableArn],  // Includes movie cast
  }),
  });
 
@@ -234,7 +234,7 @@ movieEndpoint.addMethod(
   new apig.LambdaIntegration(deleteMovieFn, { proxy: true })
 );
        
-const movieCastEndpoint = movieEndpoint.addResource("cast");
+const movieCastEndpoint = movieEndpoint.addResource("actors");
 movieCastEndpoint.addMethod(
     "GET",
     new apig.LambdaIntegration(getMovieCastMembersFn, { proxy: true })
