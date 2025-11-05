@@ -60,3 +60,4 @@ export type Movie =   {
 //empty becasue you dont need anything for signing out 
 };
  
+

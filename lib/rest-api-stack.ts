@@ -6,7 +6,7 @@ import * as custom from "aws-cdk-lib/custom-resources";
 import { Construct } from "constructs";
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 import { generateBatch } from "../shared/util";
-import { movies, movieCasts } from "../seed/movies";
+import { movies, movieCasts, awards } from "../seed/movies";
 
 import * as apig from "aws-cdk-lib/aws-apigateway";
 
@@ -36,6 +36,13 @@ export class RestAPIStack extends cdk.Stack {
       indexName: "roleIx",
       sortKey: { name: "roleName", type: dynamodb.AttributeType.STRING },
  });
+
+     const awardsTable = new dynamodb.Table(this, "AwardsTable", {
+      billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+      partitionKey: { name: "id", type: dynamodb.AttributeType.NUMBER },
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      tableName: "Awards",
+    });
 
 
     
@@ -81,6 +88,7 @@ export class RestAPIStack extends cdk.Stack {
           RequestItems: {
             [moviesTable.tableName]: generateBatch(movies),
             [movieCastsTable.tableName]: generateBatch(movieCasts),  // Added
+            [awardsTable.tableName] : generateBatch(awards),
  },
  },
         physicalResourceId: custom.PhysicalResourceId.of("moviesddbInitData"), //.of(Date.now().toString()),
@@ -163,8 +171,7 @@ export class RestAPIStack extends cdk.Stack {
         timeout: cdk.Duration.seconds(10),
         memorySize: 128,
         environment: {
-          TABLE_NAME: moviesTable.tableName,
-          CAST_TABLE_NAME : movieCastsTable.tableName,
+          AWARDS_TABLE : awardsTable.tableName,
           REGION: cdk.Aws.REGION,
         },
       }
@@ -182,6 +189,7 @@ export class RestAPIStack extends cdk.Stack {
         movieCastsTable.grantReadData(getActorByIdFn);
         moviesTable.grantReadData(getAwardsFn);
         movieCastsTable.grantReadData(getAwardsFn);
+        awardsTable.grantReadData(getAwardsFn);
 
 
 

@@ -1,5 +1,5 @@
-import { Movie, MovieCast } from "./types";
-type Entity = Movie | MovieCast;
+import { Movie, MovieCast, Award } from "./types";
+type Entity = Movie | MovieCast | Award;
 export declare const generateItem: (entity: Entity) => {
     PutRequest: {
         Item: Record<string, import("@aws-sdk/client-dynamodb").AttributeValue>;

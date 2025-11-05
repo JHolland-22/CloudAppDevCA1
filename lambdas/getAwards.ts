@@ -1,7 +1,8 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, GetCommand,QueryCommand } from "@aws-sdk/lib-dynamodb";
+import { DynamoDBDocumentClient, GetCommand,QueryCommand,ScanCommand, ScanCommandInput} from "@aws-sdk/lib-dynamodb";
 import { QueryParameterMatch } from "aws-cdk-lib/aws-appmesh";
+import { Table } from "aws-cdk-lib/aws-dynamodb";
 
 const ddbDocClient = createDDbDocClient();
 
@@ -13,7 +14,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     const actorId = queryParams?.actor ? parseInt(queryParams.actor) : undefined;
     const awardBody = queryParams?.awardBody;
 
-    if (!movieId || !actorId||!awardBody) {
+    if (!movieId && !actorId && !awardBody) {
       return {
         statusCode: 404,
         headers: {
@@ -23,20 +24,41 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       };
     }
 
+    let commandInput: ScanCommandInput={
+        TableName: process.env.AWARDS_TABLE,
+    };
 
-    const commandOutput = await ddbDocClient.send(
-      new QueryCommand({
-      TableName: process.env.AWARDS_TABLE,
-      KeyConditionExpression: "movieId = :movieId",
-      FilterExpression: "actorId = :actorId AND award =:award",
-      ExpressionAttributeValues: {
-        ":movieId": movieId,
-        ":actorId": actorId,
-        ":award": awardBody
-          } 
-      })
-    );
+    if (movieId&&awardBody){
+        commandInput = {
+            ...commandInput,
+            FilterExpression: "awardId=:a AND body =:b",
+            ExpressionAttributeValues:{
+                ":a" :movieId,
+                ":b":awardBody,
+            },
+        };
+    } else if (actorId&&awardBody){
+        commandInput = {
+            ...commandInput,
+            FilterExpression: "awardId=:a AND body =:b",
+            ExpressionAttributeValues:{
+                ":a" :actorId,
+                ":b":awardBody,
+            },
+        };
 
+    }else if (awardBody)  {
+        commandInput = {
+            ...commandInput,
+            FilterExpression: "body =:b",
+            ExpressionAttributeValues:{
+                ":b":awardBody,
+            },
+        };
+
+    }
+
+    const commandOutput=await ddbDocClient.send(new ScanCommand(commandInput));
 
     console.log("GetCommand response: ", commandOutput);
     if (!commandOutput.Items) {
