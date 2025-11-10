@@ -1,5 +1,6 @@
 // export type Language = 'English' | 'Frenc
 
+
 export type Movie =   {
   id: number,
   backdrop_path: string,

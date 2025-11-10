@@ -3,6 +3,8 @@ import {Movie, MovieCast,Award} from '../shared/types'
 
 export const movies : Movie[] = [
   {
+    PK:  "m.848326",
+    SK:  "",
     adult: false,
     backdrop_path: '/sRLC052ieEzkQs9dEtPMfFxYkej.jpg',
     genre_ids: [ 878 ],
@@ -19,6 +21,8 @@ export const movies : Movie[] = [
     vote_count: 750
   },
   {
+    PK: "m.572802",
+    SK: "",
     adult: false,
     backdrop_path: '/jXJxMcVoEuXzym3vFnjqDW4ifo6.jpg',
     genre_ids: [ 28, 12, 14 ],
@@ -35,6 +39,8 @@ export const movies : Movie[] = [
     vote_count: 299
   },
   {
+    PK:  "m.695721",
+    SK:  "",
     adult: false,
     backdrop_path: '/5a4JdoFwll5DRtKMe7JLuGQ9yJm.jpg',
     genre_ids: [ 18, 878, 28 ],
@@ -51,6 +57,8 @@ export const movies : Movie[] = [
     vote_count: 1181
   },
   {
+    PK:  "m.1029575",
+    SK:  "",
     adult: false,
     backdrop_path: '/15Fe18IglCCP1jJoj5F529on0IA.jpg',
     genre_ids: [ 28, 35 ],
@@ -67,6 +75,8 @@ export const movies : Movie[] = [
     vote_count: 457
   },
   {
+    PK:  "m.787699",
+    SK:  "",
     adult: false,
     backdrop_path: '/bmlkLCjrIWnnZzdAQ4uNPG9JFdj.jpg',
     genre_ids: [ 35, 10751, 14 ],
@@ -83,6 +93,8 @@ export const movies : Movie[] = [
     vote_count: 703
   },
   {
+    PK:  "m.891699",
+    SK:  "",
     adult: false,
     backdrop_path: '/gg4zZoTggZmpAQ32qIrP5dtnkEZ.jpg',
     genre_ids: [ 28, 80 ],
@@ -99,6 +111,8 @@ export const movies : Movie[] = [
     vote_count: 181
   },
   {
+    PK:  "m.798141",
+    SK:  "",
     adult: false,
     backdrop_path: '/1pFSJ9lxMYLkgLS5gmnwm1AEiqx.jpg',
     genre_ids: [ 878 ],
@@ -115,6 +129,8 @@ export const movies : Movie[] = [
     vote_count: 119
   },
   {
+    PK:  "m.872585",
+    SK:  "",
     adult: false,
     backdrop_path: '/fm6KqXpk3M2HVveHwCrBSSBaO0V.jpg',
     genre_ids: [ 18, 36 ],
@@ -131,6 +147,8 @@ export const movies : Movie[] = [
     vote_count: 5713
   },
   {
+    PK:  "m.930564",
+    SK:  "",
     adult: false,
     backdrop_path: '/1jITxVJhkiFJuQuj8NcPLmDNtJg.jpg',
     genre_ids: [ 18, 35, 53 ],
@@ -147,6 +165,8 @@ export const movies : Movie[] = [
     vote_count: 473
   },
   {
+    PK:  "m.466420",
+    SK:  "",
     adult: false,
     backdrop_path: '/1X7vow16X7CnCoexXh4H4F2yDJv.jpg',
     genre_ids: [ 80, 18, 36 ],
@@ -163,6 +183,8 @@ export const movies : Movie[] = [
     vote_count: 1647
   },
   {
+    PK:  "m.1071215",
+    SK:  "",
     adult: false,
     backdrop_path: '/ktHEdqmMWC1wdfPRMRCTZe2OISL.jpg',
     genre_ids: [ 27, 9648, 53 ],
@@ -186,6 +208,8 @@ export const movies : Movie[] = [
 
 export const movieCasts: MovieCast[] = [
  {
+    PK:"c.848326",
+    SK:"1",
     movieId: 848326,
     actorId:1,
     actorName: "Joe Bloggs",
@@ -193,6 +217,8 @@ export const movieCasts: MovieCast[] = [
     roleDescription: "description of character 1",
  },
  {
+    PK:"c.572802",
+    SK:"2",
     movieId: 572802,
     actorId:2,
     actorName: "Alice Broggs",
@@ -200,6 +226,8 @@ export const movieCasts: MovieCast[] = [
     roleDescription: "description of character 2",
  },
  {
+    PK:"c.848326",
+    SK:"3",
     movieId: 848326,
     actorId:3,
     actorName: "Joe Cloggs",
@@ -207,6 +235,8 @@ export const movieCasts: MovieCast[] = [
     roleDescription: "description of character 3",
  },
  {
+    PK:"c.572802",
+    SK:"4",
     movieId: 572802,
     actorId:4,
     actorName: "Joe Bloggs",
@@ -218,24 +248,32 @@ export const movieCasts: MovieCast[] = [
 
 export const awards : Award[] = [
  {
+    PK:"w.848326",
+    SK:"Academy",
     awardId: 848326,
     body: "Academy",
     category: "Best movie ",
     year:2024 ,
  },
  {
+    PK:"w.572802",
+    SK:"Bafta",
     awardId: 572802,
     body: "Bafta",
     category: "Best Action movie ",
     year:2024 ,
  },
  {
+    PK:"w.1",
+    SK:"Golden Globe",
     awardId: 1,
     body: "Golden Globe ",
     category: "Best male actor ",
     year:2024 ,
  },
  {
+    PK:"w.2",
+    SK:"Academy",
     awardId: 2,
     body: "Academy",
     category: "Best female actor ",
