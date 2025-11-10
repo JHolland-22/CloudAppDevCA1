@@ -2,6 +2,8 @@
 
 
 export type Movie =   {
+  PK : string,
+  SK : string,
   id: number,
   backdrop_path: string,
   genre_ids: number[ ],
@@ -19,6 +21,8 @@ export type Movie =   {
 }
 
   export type MovieCast = {
+    PK : string,
+    SK : string,
     movieId: number;
     actorId: number;
     actorName: string;
@@ -27,6 +31,8 @@ export type Movie =   {
  };
   // Used to validate the query string of HTTP GET requests
   export type MovieCastMemberQueryParams = {
+    PK : string,
+    SK : string,
     movieId: string;
     actorName?: string;
     roleName?: string
@@ -34,6 +40,8 @@ export type Movie =   {
 
 
  export type Award = {
+  PK : string,
+  SK : string,
   awardId: number;
   body: string;
   category: string;

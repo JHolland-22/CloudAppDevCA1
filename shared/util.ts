@@ -15,3 +15,18 @@ export const generateBatch = (data: Entity[]) => {
     return generateItem(e);
  });
 };
+
+
+export const PK ={
+  movie:(id: string) => "m.${id}",
+  cast:(movieId: string) => "c.${movieId}",
+  award:(awardId: string) => "w.${awardId}",
+};
+
+
+export const SK ={
+  movieDefault:() => "",
+  castActor:(actorId: string) => String(actorId),
+  awardBody:(body: string) => body,
+};
+
