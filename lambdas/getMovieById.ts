@@ -23,11 +23,14 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
     const queryParams = event.queryStringParameters;
     const getcast = event.queryStringParameters?.cast === "true";
+    const PK = `m.${movieId}`;
+    const SK = "xxxx"
+
 
     const commandOutput = await ddbDocClient.send(
       new GetCommand({
         TableName: process.env.TABLE_NAME,
-        Key: { id: movieId },
+        Key: { PK, SK },
       })
     );
 
@@ -46,12 +49,13 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       data: commandOutput.Item,
     };
 
+    const castPK = `c.${movieId}`; 
     if(getcast){
       const castRes = await ddbDocClient.send(
         new QueryCommand({
-          TableName: process.env.CAST_TABLE_NAME,
-          KeyConditionExpression: "movieId = :m",
-          ExpressionAttributeValues:{":m": movieId},
+          TableName: process.env.TABLE_NAME,
+          KeyConditionExpression: "PK = :PK",
+          ExpressionAttributeValues:{":PK": castPK},
         })
       )
       body.data.cast = castRes.Items || [];

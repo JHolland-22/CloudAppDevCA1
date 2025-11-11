@@ -26,36 +26,54 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
     let commandInput: ScanCommandInput={
         TableName: process.env.AWARDS_TABLE,
+
     };
 
     if (movieId&&awardBody){
         commandInput = {
             ...commandInput,
-            FilterExpression: "awardId=:a AND body =:b",
+            FilterExpression: "PK=:PK AND SK =:SK",
             ExpressionAttributeValues:{
-                ":a" :movieId,
-                ":b":awardBody,
+                ":PK" :`w.${movieId}`,
+                ":SK":awardBody,
             },
         };
     } else if (actorId&&awardBody){
         commandInput = {
             ...commandInput,
-            FilterExpression: "awardId=:a AND body =:b",
+            FilterExpression: "PK=:PK AND SK =:SK",
             ExpressionAttributeValues:{
-                ":a" :actorId,
-                ":b":awardBody,
+                ":PK" :`w.${actorId}`,
+                ":SK":awardBody,
             },
         };
 
     }else if (awardBody)  {
         commandInput = {
             ...commandInput,
-            FilterExpression: "body =:b",
+            FilterExpression: "SK =:SK",
             ExpressionAttributeValues:{
-                ":b":awardBody,
+                ":SK":awardBody,
             },
         };
 
+    } else if (movieId){
+      commandInput = {
+        ...commandInput,
+        FilterExpression: "PK =:PK",
+        ExpressionAttributeValues:{
+            ":PK":`w.${movieId}`,
+        },
+    };
+
+    } else if (actorId){
+      commandInput = {
+        ...commandInput,
+        FilterExpression: "PK =:PK",
+        ExpressionAttributeValues:{
+            ":PK":`w.${actorId}`,
+        },
+    };
     }
 
     const commandOutput=await ddbDocClient.send(new ScanCommand(commandInput));
