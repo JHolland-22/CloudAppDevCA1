@@ -117,7 +117,7 @@ export class RestAPIStack extends cdk.Stack {
     const deleteMovieFn = new lambdanode.NodejsFunction(this, "DeleteMovieFn", {
       architecture: lambda.Architecture.ARM_64,
       runtime: lambda.Runtime.NODEJS_16_X,
-      entry: `${__dirname}/../lambdas/addMovie.ts`,
+      entry: `${__dirname}/../lambdas/deleteMovie.ts`,
       timeout: cdk.Duration.seconds(10),
       memorySize: 128,
       environment: {

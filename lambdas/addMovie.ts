@@ -1,7 +1,6 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
-import {PK,SK} from "../shared/util"
 
 const ddbDocClient = createDDbDocClient();
 
@@ -19,26 +18,10 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
         body: JSON.stringify({ message: "Missing request body" }),
       };
     }
-    
 
-
-    if (body.id){
-      body.PK = `m.${body.id}`;
-      body.SK = "";
-    }
-
-    if (body.actorId && body.movieId){
-      body.PK = `c.${body.movieId}`;
-      body.SK = String(body.actorId);
-    }
-
-    if (body.awardId && body.category){
-      body.PK = `w.${body.awardId}`;
-      body.SK = body.body;
-    }
-
-     
-
+    body.PK = `m.${body.id}`;
+    body.SK = "xxxx";
+  
     const commandOutput = await ddbDocClient.send(
       new PutCommand({
         TableName: process.env.TABLE_NAME,

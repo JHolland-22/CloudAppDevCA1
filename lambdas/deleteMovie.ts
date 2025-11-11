@@ -1,14 +1,16 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, DeleteCommand } from "@aws-sdk/lib-dynamodb";
-
 const ddbDocClient = createDDbDocClient();
 
 export const handler: APIGatewayProxyHandler = async (event, context) => {
+
+  console.log("### DELETE LAMBDA CALLED ###");
+  console.log("event:", event);
   try {
     // Print Event
  const parameters  = event?.pathParameters;
-    const movieId = parameters?.movieId ? parseInt(parameters.movieId) : undefined;
+    const movieId = parameters?.movieId ;
 
     if (!movieId) {
       return {
@@ -20,10 +22,11 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       };
     }
 
+
     const commandOutput = await ddbDocClient.send(
       new DeleteCommand({
         TableName: process.env.TABLE_NAME,
-        Key: {id:movieId}
+        Key: {id: Number(movieId)}
       })
     );
     return {
