@@ -42,38 +42,47 @@ export const handler: APIGatewayProxyHandlerV2 = async (event, context) => {
  };
  }
     
-    const movieId = parseInt(queryParams.movieId);
-    let commandInput: QueryCommandInput = {
-      TableName: process.env.TABLE_NAME,
+ const movieId = parseInt(queryParams.movieId);
+ const PK = `c.${movieId}`;
+ 
+ let commandInput: QueryCommandInput = {
+   TableName: process.env.TABLE_NAME,
+   KeyConditionExpression: "PK = :pk",
+   ExpressionAttributeValues: { ":pk": PK }
  };
-    if ("roleName" in queryParams) {
-      commandInput = {
- ...commandInput,
-        IndexName: "roleIx",
-        KeyConditionExpression: "movieId = :m and begins_with(roleName, :r) ",
-        ExpressionAttributeValues: {
-          ":m": movieId,
-          ":r": queryParams.roleName,
- },
- };
- } else if ("actorName" in queryParams) {
-      commandInput = {
- ...commandInput,
-        KeyConditionExpression: "movieId = :m and begins_with(actorName, :a) ",
-        ExpressionAttributeValues: {
-          ":m": movieId,
-          ":a": queryParams.actorName,
- },
- };
- } else {
-      commandInput = {
- ...commandInput,
-        KeyConditionExpression: "movieId = :m",
-        ExpressionAttributeValues: {
-          ":m": movieId,
- },
- };
- }
+ 
+ if ("roleName" in queryParams) {
+  commandInput = {
+    ...commandInput,
+    FilterExpression: "contains(roleName, :r)",
+    ExpressionAttributeValues: {
+      ...commandInput.ExpressionAttributeValues,
+      ":r": queryParams.roleName
+    }
+  };
+}
+
+ 
+if ("actorName" in queryParams) {
+  commandInput = {
+    ...commandInput,
+    FilterExpression: "contains(actorName, :a)",
+    ExpressionAttributeValues: {
+      ...commandInput.ExpressionAttributeValues,
+      ":a": queryParams.actorName
+    }
+  };
+}
+
+ //else {
+   //   commandInput = {
+// ...commandInput,
+//        KeyConditionExpression: "movieId = :m",
+ //       ExpressionAttributeValues: {
+ //         ":m": movieId,
+// },
+// };
+// }
     
     const commandOutput = await ddbDocClient.send(
       new QueryCommand(commandInput)

@@ -23,14 +23,16 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     }
 
 
+    const PK = `c.${movieId}`;
+    const SK = String(actorId);
+
     const commandOutput = await ddbDocClient.send(
       new QueryCommand({
-      TableName: process.env.CAST_TABLE_NAME,
-      KeyConditionExpression: "movieId = :movieId",
-      FilterExpression: "actorId = :actorId",
+      TableName: process.env.TABLE_NAME,
+      KeyConditionExpression: "PK = :PK AND SK = :SK",
       ExpressionAttributeValues: {
-        ":movieId": movieId,
-        ":actorId": actorId
+        ":PK": PK,
+        ":SK": SK
           } 
       })
     );

@@ -93,9 +93,12 @@ export class RestAPIStack extends cdk.Stack {
         action: "batchWriteItem",
         parameters: {
           RequestItems: {
-            [moviesTable.tableName]: generateBatch(movies),
-        //   [movieCastsTable.tableName]: generateBatch(movieCasts),  // Added
-        //    [awardsTable.tableName] : generateBatch(awards),
+
+            [moviesTable.tableName]: [
+            ...generateBatch(movies),
+             ...  generateBatch(movieCasts),  // Added
+             ...  generateBatch(awards),
+            ]
  },
  },
         physicalResourceId: custom.PhysicalResourceId.of("moviesddbInitData"), //.of(Date.now().toString()),
