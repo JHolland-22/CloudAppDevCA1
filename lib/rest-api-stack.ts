@@ -17,33 +17,40 @@ export class RestAPIStack extends cdk.Stack {
     super(scope, id, props);
 
     // Tables 
-    const moviesTable = new dynamodb.Table(this, "MoviesTable", {
-      billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
-      partitionKey: { name: "id", type: dynamodb.AttributeType.NUMBER },
+  //  const moviesTable = new dynamodb.Table(this, "MoviesTable", {
+  //    billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+  //    partitionKey: { name: "id", type: dynamodb.AttributeType.NUMBER },
+  //    removalPolicy: cdk.RemovalPolicy.DESTROY,
+  //    tableName: "Movies",
+  //  });
+
+ //       const movieCastsTable = new dynamodb.Table(this, "MovieCastTable", {
+  //    billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+    //  partitionKey: { name: "movieId", type: dynamodb.AttributeType.NUMBER },
+    //  sortKey: { name: "actorName", type: dynamodb.AttributeType.STRING },
+    //  removalPolicy: cdk.RemovalPolicy.DESTROY,
+     // tableName: "MovieCast",
+// });
+
+  //  movieCastsTable.addLocalSecondaryIndex({
+  //    indexName: "roleIx",
+  //    sortKey: { name: "roleName", type: dynamodb.AttributeType.STRING },
+ //});
+
+   //  const awardsTable = new dynamodb.Table(this, "AwardsTable", {
+   //   billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+   //   partitionKey: { name: "awardId", type: dynamodb.AttributeType.NUMBER },
+  //    removalPolicy: cdk.RemovalPolicy.DESTROY,
+  //    tableName: "Awards",
+  //  });
+
+   const moviesTable = new dynamodb.Table(this, "MoviesTable", {
+     billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+      partitionKey: { name: "PK", type: dynamodb.AttributeType.STRING },
+      sortKey: { name: "SK", type: dynamodb.AttributeType.STRING },
       removalPolicy: cdk.RemovalPolicy.DESTROY,
-      tableName: "Movies",
+     tableName: "Movies",
     });
-
-        const movieCastsTable = new dynamodb.Table(this, "MovieCastTable", {
-      billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
-      partitionKey: { name: "movieId", type: dynamodb.AttributeType.NUMBER },
-      sortKey: { name: "actorName", type: dynamodb.AttributeType.STRING },
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
-      tableName: "MovieCast",
- });
-
-    movieCastsTable.addLocalSecondaryIndex({
-      indexName: "roleIx",
-      sortKey: { name: "roleName", type: dynamodb.AttributeType.STRING },
- });
-
-     const awardsTable = new dynamodb.Table(this, "AwardsTable", {
-      billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
-      partitionKey: { name: "awardId", type: dynamodb.AttributeType.NUMBER },
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
-      tableName: "Awards",
-    });
-
 
     
     // Functions 
@@ -58,7 +65,7 @@ export class RestAPIStack extends cdk.Stack {
         memorySize: 128,
         environment: {
           TABLE_NAME: moviesTable.tableName,
-          CAST_TABLE_NAME : movieCastsTable.tableName,
+          CAST_TABLE_NAME : moviesTable.tableName,
           REGION: cdk.Aws.REGION,
         },
       }
@@ -87,14 +94,14 @@ export class RestAPIStack extends cdk.Stack {
         parameters: {
           RequestItems: {
             [moviesTable.tableName]: generateBatch(movies),
-            [movieCastsTable.tableName]: generateBatch(movieCasts),  // Added
-            [awardsTable.tableName] : generateBatch(awards),
+        //   [movieCastsTable.tableName]: generateBatch(movieCasts),  // Added
+        //    [awardsTable.tableName] : generateBatch(awards),
  },
  },
         physicalResourceId: custom.PhysicalResourceId.of("moviesddbInitData"), //.of(Date.now().toString()),
  },
       policy: custom.AwsCustomResourcePolicy.fromSdkCalls({
-        resources: [moviesTable.tableArn, movieCastsTable.tableArn, awardsTable.tableArn],  // Includes movie cast
+       resources: [moviesTable.tableArn],  // Includes movie cast
  }),
  });
 
@@ -137,7 +144,7 @@ export class RestAPIStack extends cdk.Stack {
         timeout: cdk.Duration.seconds(10),
         memorySize: 128,
         environment: {
-          TABLE_NAME: movieCastsTable.tableName,
+          TABLE_NAME: moviesTable.tableName,
           REGION: cdk.Aws.REGION,
         },
       }
@@ -155,7 +162,7 @@ export class RestAPIStack extends cdk.Stack {
         memorySize: 128,
         environment: {
           TABLE_NAME: moviesTable.tableName,
-          CAST_TABLE_NAME : movieCastsTable.tableName,
+          CAST_TABLE_NAME : moviesTable.tableName,
           REGION: cdk.Aws.REGION,
         },
       }
@@ -171,7 +178,7 @@ export class RestAPIStack extends cdk.Stack {
         timeout: cdk.Duration.seconds(10),
         memorySize: 128,
         environment: {
-          AWARDS_TABLE : awardsTable.tableName,
+          AWARDS_TABLE : moviesTable.tableName,
           REGION: cdk.Aws.REGION,
         },
       }
@@ -184,12 +191,12 @@ export class RestAPIStack extends cdk.Stack {
         moviesTable.grantReadWriteData(newMovieFn)
         moviesTable.grantReadWriteData(deleteMovieFn)
         moviesTable.grantReadData(getActorByIdFn);
-        movieCastsTable.grantReadData(getMovieCastMembersFn);
-        movieCastsTable.grantReadData(getMovieByIdFn);
-        movieCastsTable.grantReadData(getActorByIdFn);
+        moviesTable.grantReadData(getMovieCastMembersFn);
+        moviesTable.grantReadData(getMovieByIdFn);
+        moviesTable.grantReadData(getActorByIdFn);
         moviesTable.grantReadData(getAwardsFn);
-        movieCastsTable.grantReadData(getAwardsFn);
-        awardsTable.grantReadData(getAwardsFn);
+        moviesTable.grantReadData(getAwardsFn);
+        moviesTable.grantReadData(getAwardsFn);
 
 
 
