@@ -243,7 +243,7 @@ movieEndpoint.addMethod(
   new apig.LambdaIntegration(deleteMovieFn, { proxy: true })
 );
        
-const castEndpoint = api.root.addResource("cast");
+const castEndpoint = api.root.addResource("actors");
 castEndpoint.addMethod(
     "GET",
     new apig.LambdaIntegration(getMovieCastMembersFn, { proxy: true })

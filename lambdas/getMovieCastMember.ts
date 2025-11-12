@@ -19,7 +19,10 @@ const ddbDocClient = createDocumentClient();
 export const handler: APIGatewayProxyHandlerV2 = async (event, context) => {
   try {
     console.log("[EVENT]", JSON.stringify(event));
-    const queryParams = event.queryStringParameters;
+    const queryParams = {
+      ...event.queryStringParameters,
+      ...event.pathParameters,
+    };
     if (!queryParams) {
       return {
         statusCode: 500,
@@ -29,7 +32,7 @@ export const handler: APIGatewayProxyHandlerV2 = async (event, context) => {
         body: JSON.stringify({ message: "Missing query parameters" }),
  };
  }
-    if (!isValidQueryParams(queryParams)) {
+    if (!queryParams.movieId && !isValidQueryParams(queryParams)) {
       return {
         statusCode: 500,
         headers: {
@@ -87,6 +90,9 @@ if ("actorName" in queryParams) {
     const commandOutput = await ddbDocClient.send(
       new QueryCommand(commandInput)
  );
+
+
+ 
       
       return {
         statusCode: 200,
