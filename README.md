@@ -57,8 +57,6 @@ https://www.dynamodbguide.com/filtering
 dynamoDB
 https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/dynamodb/
 
-https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/
-
 [example_dynamodb_Scenarios_QueryWithDynamicFilter_section.html
 ](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/example_dynamodb_Scenarios_QueryWithDynamicFilter_section.html)
 
@@ -69,7 +67,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.htm
 
 https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.OperatorsAndFunctions.html#Expressions.OperatorsAndFunctions.Syntax
 
-https://github.com/awsdocs/aws-doc-sdk-examples/blob/main/javascriptv3/example_code/dynamodb/actions/document-client/scan.js#L6
+
 
 
 
