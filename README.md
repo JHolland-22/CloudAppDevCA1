@@ -59,7 +59,9 @@ https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/dynamodb/
 
 https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/
 
-example_dynamodb_Scenarios_QueryWithDynamicFilter_section.html
+[example_dynamodb_Scenarios_QueryWithDynamicFilter_section.html
+](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/example_dynamodb_Scenarios_QueryWithDynamicFilter_section.html)
+
 https://www.alexdebrie.com/posts/dynamodb-filter-expressions/
 
 https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.html
