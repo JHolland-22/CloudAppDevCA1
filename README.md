@@ -32,8 +32,9 @@ A screenshot from CloudWatch logs showing an example of User Activity logging, e
 
 
 ### Design features (if required).
+I did complete the cognito lab and tried to implement it into the project but did not have enough time to complete this.
+I put movies, actors and awards into one table, using PK and SK, m for movie , c for actor and w for award.  
 
-n/a
 ###  Extra (If relevant).
 
 references 
